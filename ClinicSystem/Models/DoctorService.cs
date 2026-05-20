@@ -12,8 +12,8 @@
 
 
 
-        public Doctor Doctors { get; set; } = null;
-        public Service Services { get; set; } = null;
+        public Doctor Doctor { get; set; } = null!;
+        public Service Service { get; set; } = null!;
         public ICollection<Appointment> Appointments { get; set; } = new List<Appointment>();
 
 

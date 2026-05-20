@@ -3,12 +3,14 @@
     public class Doctor
     {
         public int Id { get; set; }
-        public int userId { get; set; }
+        public int UserId { get; set; }
         public int ExperienceYears { get; set; }
         public DateTime CreatedAt {  get; set; } = DateTime.UtcNow;
         public DateTime UpdateAt {  get; set; } = DateTime.UtcNow;
 
 
+        public User User { get; set; } = null!;
+        public DoctorService DoctorService { get; set; } = null!;
 
         public ICollection <DoctorSpecialty> DoctorSpecialties { get; set; } = new List<DoctorSpecialty>();
 
