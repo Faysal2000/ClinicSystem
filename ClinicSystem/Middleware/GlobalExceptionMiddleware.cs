@@ -7,9 +7,9 @@ namespace ClinicSystem.Middleware
     public class GlobalExceptionMiddleware
     {
 
-        private readonly RequestDelegate _next;
+        private readonly RequestDelegate _next; // Middleware pipeline delegate
 
-        private readonly ILogger<GlobalExceptionMiddleware> _logger;
+        private readonly ILogger<GlobalExceptionMiddleware> _logger; // Logger for logging exceptions
 
         public GlobalExceptionMiddleware(RequestDelegate next, ILogger<GlobalExceptionMiddleware> logger)
         {

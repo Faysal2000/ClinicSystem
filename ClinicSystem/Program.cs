@@ -7,6 +7,8 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi;
 using Microsoft.OpenApi.Models;
 using System.Text;
+using ClinicSystem.Middleware;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -86,6 +88,7 @@ builder.Services.AddCors(options =>
 });
 
 var app = builder.Build();
+app.UseMiddleware<GlobalExceptionMiddleware>(); // Add global exception handling middleware to the pipeline
 
 //  Middleware Pipeline 
 if (app.Environment.IsDevelopment())
