@@ -9,8 +9,8 @@ namespace ClinicSystem.Repositories.Implementations
     {
         public readonly AppDbContext _context;
 
-        private IGenericRepository<Role>? _roles;
-        private IGenericRepository<User>? _users;
+        //private IGenericRepository<Role>? _roles;
+        //private IGenericRepository<User>? _users;
         private IGenericRepository<Doctor>? _doctors;
         private IGenericRepository<Patient>? _patients;
         private IGenericRepository<Specialty>? _specialties;
@@ -31,10 +31,14 @@ namespace ClinicSystem.Repositories.Implementations
         // Lazy initialization of repositories to ensure they are only created when needed,
         // optimizing resource usage and improving performance by avoiding unnecessary
         // instantiation of repositories that may not be used during the lifetime of the UnitOfWork.
-        public IGenericRepository<Role> Roles => 
-        _roles ??= new GenericRepository<Role>(_context);
-        public IGenericRepository<User> Users =>
-           _users ??= new GenericRepository<User>(_context);
+       
+        
+        
+        
+        //public IGenericRepository<Role> Roles => 
+        //_roles ??= new GenericRepository<Role>(_context);
+        //public IGenericRepository<User> Users =>
+        //   _users ??= new GenericRepository<User>(_context);
 
         public IGenericRepository<Doctor> Doctors =>
             _doctors ??= new GenericRepository<Doctor>(_context);

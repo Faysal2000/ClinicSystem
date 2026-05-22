@@ -1,10 +1,12 @@
-﻿namespace ClinicSystem.Models;
+﻿using Microsoft.AspNetCore.Identity;
 
-    public class Role
-    {
-        public int Id { get; set; }
+namespace ClinicSystem.Models;
 
-        public string Name { get; set; }
+public class Role : IdentityUser<int>
+{ 
+        //public int Id { get; set; }
+
+        //public string Name { get; set; }
 
         public DateTime CreatedAt { get; set; }
         public DateTime UpdatedAt { get; set; }

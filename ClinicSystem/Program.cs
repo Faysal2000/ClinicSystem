@@ -1,14 +1,17 @@
 using ClinicSystem.Data;
+using ClinicSystem.Middleware;
+using ClinicSystem.Models;
 using ClinicSystem.Repositories.Implementations;
 using ClinicSystem.Repositories.Interfaces;
+using ClinicSystem.Services.Implementations;
+using ClinicSystem.Services.Interfaces;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi;
 using Microsoft.OpenApi.Models;
 using System.Text;
-using ClinicSystem.Middleware;
-
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -19,9 +22,39 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 //  Repository & Unit of Work 
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
+
+builder.Services.AddScoped<IAuthService, AuthService>();
+
+
+
+// Identity 
+builder.Services.AddIdentity<User, Role>(options =>
+{
+    // Password settings
+    options.Password.RequireDigit = true;
+    options.Password.RequiredLength = 8;
+    options.Password.RequireNonAlphanumeric = false;
+    options.Password.RequireUppercase = false;
+    options.Password.RequireLowercase = true;
+
+    // Lockout settings
+    options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(60);
+    options.Lockout.MaxFailedAccessAttempts = 3;
+    options.Lockout.AllowedForNewUsers = true;
+
+    // User settings
+    options.User.RequireUniqueEmail = true;
+})
+.AddEntityFrameworkStores<AppDbContext>()
+.AddDefaultTokenProviders();
+
+
+
+
+
 //  JWT Authentication 
-var jwtKey = builder.Configuration["Jwt:Key"]
-    ?? throw new InvalidOperationException("JWT Key is not configured.");
+var jwtKey = builder.Configuration["Jwt:Key"] ??
+    throw new InvalidOperationException("JWT Key is not configured.");
 
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
